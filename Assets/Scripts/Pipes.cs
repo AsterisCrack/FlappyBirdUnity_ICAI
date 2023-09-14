@@ -18,11 +18,6 @@ public class Pipes : MonoBehaviour
     private void Update()
     {
         // transform.position += ...
-
-        // if (transform.position.x < leftEdge) 
-        // {
-        //     Destroy(gameObject);
-        // }
     }
 
 }
