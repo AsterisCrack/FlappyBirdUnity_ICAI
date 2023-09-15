@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     public Spawner spawner;
 
     public TextMeshProUGUI scoreText; // How we reference a text component of TMPro in Unity's UI
-    
+    public TextMeshProUGUI highScoreText;
+
     public GameObject playButton;
     public GameObject gameOver;
 
@@ -18,6 +19,10 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
+        //Load high score
+        int highScore = PlayerPrefs.GetInt("HighScore", 0);
+        highScoreText.text = "High Score: " + highScore.ToString();
+
         Pause();
     }
     
@@ -40,13 +45,25 @@ public class GameManager : MonoBehaviour
         {
             Destroy(pipes[i].gameObject);
         }
+
+        //Start spawning again
+        spawner.StartSpawning();
     }
 
     public void GameOver()
     {
         playButton.SetActive(true);
         gameOver.SetActive(true);
+        spawner.StopSpawning();
 
+        //Check if high score and save it
+        int highScore = PlayerPrefs.GetInt("HighScore", 0);
+        if (Score > highScore)
+        {
+            PlayerPrefs.SetInt("HighScore", Score);
+            highScoreText.text = "High Score: " + Score.ToString();
+        }
+        
         Pause();
     }
 

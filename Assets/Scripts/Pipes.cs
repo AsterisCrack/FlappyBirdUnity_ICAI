@@ -9,6 +9,7 @@ public class Pipes : MonoBehaviour
     [Header("Parameters")]
 
     private float leftEdge;
+    public float speed = 1f;
 
     private void Start()
     {
@@ -17,7 +18,20 @@ public class Pipes : MonoBehaviour
 
     private void Update()
     {
-        // transform.position += ...
+        transform.position += Vector3.left * speed * Time.deltaTime;
+
+        //Check if the pipe is offscreen
+        if (transform.position.x < leftEdge)
+        {
+            Despawn();
+        }
     }
+
+    private void Despawn()
+    {
+
+        Destroy(gameObject);
+    }
+
 
 }

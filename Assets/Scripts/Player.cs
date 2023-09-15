@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 
     [Header("Parameters")]
     public float strength = 5f;
+    public float rotationStrength = 0.5f;
     
     private const float Gravity = -9.81f;
     
@@ -23,18 +24,21 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            // direction = ...
+            direction = Vector3.up * strength;
         }
 
         // Apply gravity and update the position
         // Time.deltaTime is applied twice because acceleration is in m/s^2
         direction.y += Gravity * Time.deltaTime ;
         transform.position += direction* Time.deltaTime;
+
+        AnimateSprite();
     }
 
     private void AnimateSprite()
     {
-  
+        // Rotate the player to face the direction of movement
+        transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, 1f) * Mathf.Rad2Deg * rotationStrength);
     }
 
     // Bad practice, since Player shouldn't call methods on GameManager
